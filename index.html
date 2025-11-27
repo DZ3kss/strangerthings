@@ -4,144 +4,144 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Stranger Things</title>
+
   <style>
     :root{
-      --bg1:#0f172a; /* dark navy */
-      --bg2:#6b21a8; /* purple */
-      --accent:#ff3d81; /* pink */
+      --bg1:#0f172a;
+      --accent:#ff3d81;
       --glass: rgba(255,255,255,0.06);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
+
     body{
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-family: Inter, system-ui, sans-serif;
       display:grid;
       place-items:center;
       background: radial-gradient(1200px 600px at 10% 20%, rgba(107,33,168,0.18), transparent),
                   radial-gradient(1000px 500px at 90% 80%, rgba(255,61,129,0.12), transparent),
                   linear-gradient(180deg,var(--bg1), #05060a 85%);
-      color: #fff;
-      padding:2rem;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      color:#fff;
+      padding:1.5rem;
+      text-align:center;
     }
 
     .card{
-      width:min(920px, 96vw);
-      padding:3.5rem 2rem;
+      width:min(900px, 95%);
+      padding:2.5rem 1.8rem;
       border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-      text-align:center;
-      backdrop-filter: blur(6px) saturate(120%);
+      background: rgba(255,255,255,0.03);
+      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      backdrop-filter:blur(8px);
       position:relative;
-      overflow:hidden;
+    }
+
+    .img-top{
+      width:220px;
+      max-width:75%;
+      margin:1.2rem auto 1.5rem;
+      display:block;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.4);
+      animation:fadeIn 1.2s ease forwards;
+      opacity:0;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(-10px);}
+      to{opacity:1; transform:translateY(0);}
     }
 
     h1{
-      font-size: clamp(1.6rem, 4vw, 3.2rem);
-      line-height:1.05;
+      font-size:clamp(1.6rem, 4vw, 3rem);
+      animation:float 6s ease-in-out infinite;
       margin-bottom:1rem;
-      letter-spacing: -0.02em;
-      text-shadow: 0 6px 30px rgba(107,33,168,0.28);
-      transform-origin:center;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    p.subtitle{
-      margin-bottom:1.25rem;
-      color: rgba(255,255,255,0.78);
-      font-size:clamp(0.95rem, 1.6vw, 1.1rem);
-    }
-
-    .btn{
-      display:inline-block;
-      padding:0.65rem 1.05rem;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(90deg, rgba(255,61,129,0.14), rgba(107,33,168,0.08));
-      cursor:pointer;
-      font-weight:600;
-      backdrop-filter: blur(4px);
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .btn:active{transform:translateY(1px)}
-
-    .glow{
-      position:absolute;
-      inset: -30% -30% auto auto;
-      width:60vmax;height:60vmax;
-      background: radial-gradient(circle at 10% 20%, rgba(107,33,168,0.22), transparent 20%),
-                  radial-gradient(circle at 90% 80%, rgba(255,61,129,0.14), transparent 18%);
-      filter: blur(48px);
-      pointer-events:none;
-      transform: rotate(8deg);
     }
 
     @keyframes float{
-      0%{transform:translateY(0) scale(1)}
-      50%{transform:translateY(-6px) scale(1.01)}
-      100%{transform:translateY(0) scale(1)}
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-6px)}
+      100%{transform:translateY(0)}
     }
 
-    /* small flair for the caption that appears after clicking */
-    .result{
-      display:inline-block;
+    .buttons{
       margin-top:1rem;
-      padding:0.5rem 0.85rem;
+    }
+
+    .btn{
+      padding:0.7rem 1.3rem;
+      margin:0.3rem;
+      font-size:1rem;
+      font-weight:600;
+      cursor:pointer;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.15);
+      background: linear-gradient(90deg, rgba(255,61,129,0.18), rgba(107,33,168,0.1));
+      color:white;
+      transition:0.2s;
+    }
+
+    .btn:hover{
+      transform:scale(1.05);
+    }
+
+    .result{
+      margin-top:1.2rem;
+      font-size:1.1rem;
+      padding:0.5rem 1rem;
       border-radius:999px;
       background:var(--glass);
-      border:1px solid rgba(255,255,255,0.04);
-      color:#ffedf3;
-      font-weight:700;
-      letter-spacing:0.02em;
-      transition: transform .22s cubic-bezier(.2,.9,.3,1), opacity .22s ease;
-      transform-origin:center;
       opacity:0;
+      transition:opacity 0.3s ease;
     }
-    .result.show{opacity:1; transform:scale(1)}
+    .result.show{opacity:1;}
 
-    /* small responsive tweak */
-    @media (max-width:460px){
-      .card{padding:2rem}
+    @media (max-width:480px){
+      .card{padding:1.8rem}
+      .btn{font-size:0.9rem}
+      h1{font-size:1.45rem}
     }
-
   </style>
 </head>
-<body>
-  <div class="card" role="main">
-    <div class="glow" aria-hidden="true"></div>
 
-    <h1 id="pregunta">Ya se vieron los capítulos de la nueva temporada de <em>Stranger Things</em>?</h1>
-    <img src="gatolike.jpg" alt="Stranger Things" class="img-top">
-    <div id="resultado" class="result" aria-live="polite"></div>
+<body>
+  <div class="card">
+    
+    <h1 id="pregunta">
+      ¿Ya se vieron los capítulos de la nueva temporada de <em>Stranger Things</em>?
+    </h1>
+
+    <img src="gatolike.jpg" alt="Imagen" class="img-top">
+
+    <div class="buttons">
+      <button id="yesBtn" class="btn">Sí, ya vi</button>
+      <button id="noBtn" class="btn">No, aún no</button>
+    </div>
+
+    <div id="resultado" class="result"></div>
   </div>
 
   <script>
     const resultado = document.getElementById('resultado');
+    const pregunta = document.getElementById('pregunta');
     const yes = document.getElementById('yesBtn');
     const no = document.getElementById('noBtn');
-    const pregunta = document.getElementById('pregunta');
 
     function showResult(text){
       resultado.textContent = text;
       resultado.classList.add('show');
-      setTimeout(()=> resultado.classList.remove('show'), 3000);
+      setTimeout(()=> resultado.classList.remove('show'), 2900);
     }
 
     yes.addEventListener('click', ()=>{
-      showResult('¡Genial! Mantén los spoilers en secreto. 🤫');
-      pregunta.style.transform = 'scale(0.99) rotate(-0.6deg)';
-      setTimeout(()=> pregunta.style.transform = '', 420);
+      showResult("¡Genial! Mantén los spoilers en secreto. 🤫");
     });
 
     no.addEventListener('click', ()=>{
-      showResult('Perfecto — disfruta la temporada cuando la veas. 🍿');
-      pregunta.style.transform = 'scale(1.01) rotate(0.6deg)';
-      setTimeout(()=> pregunta.style.transform = '', 420);
+      showResult("Perfecto — disfrútala cuando la veas. 🍿");
     });
 
-    // Keyboard shortcut: Y / N
+    // Atajos de teclado Y/N
     window.addEventListener('keydown', (e)=>{
       if(e.key.toLowerCase() === 'y') yes.click();
       if(e.key.toLowerCase() === 'n') no.click();
