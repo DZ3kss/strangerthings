@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stranger Things</title>
+  <style>
+    :root{
+      --bg1:#0f172a; /* dark navy */
+      --bg2:#6b21a8; /* purple */
+      --accent:#ff3d81; /* pink */
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(1200px 600px at 10% 20%, rgba(107,33,168,0.18), transparent),
+                  radial-gradient(1000px 500px at 90% 80%, rgba(255,61,129,0.12), transparent),
+                  linear-gradient(180deg,var(--bg1), #05060a 85%);
+      color: #fff;
+      padding:2rem;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .card{
+      width:min(920px, 96vw);
+      padding:3.5rem 2rem;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      text-align:center;
+      backdrop-filter: blur(6px) saturate(120%);
+      position:relative;
+      overflow:hidden;
+    }
+
+    h1{
+      font-size: clamp(1.6rem, 4vw, 3.2rem);
+      line-height:1.05;
+      margin-bottom:1rem;
+      letter-spacing: -0.02em;
+      text-shadow: 0 6px 30px rgba(107,33,168,0.28);
+      transform-origin:center;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    p.subtitle{
+      margin-bottom:1.25rem;
+      color: rgba(255,255,255,0.78);
+      font-size:clamp(0.95rem, 1.6vw, 1.1rem);
+    }
+
+    .btn{
+      display:inline-block;
+      padding:0.65rem 1.05rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(90deg, rgba(255,61,129,0.14), rgba(107,33,168,0.08));
+      cursor:pointer;
+      font-weight:600;
+      backdrop-filter: blur(4px);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+
+    .glow{
+      position:absolute;
+      inset: -30% -30% auto auto;
+      width:60vmax;height:60vmax;
+      background: radial-gradient(circle at 10% 20%, rgba(107,33,168,0.22), transparent 20%),
+                  radial-gradient(circle at 90% 80%, rgba(255,61,129,0.14), transparent 18%);
+      filter: blur(48px);
+      pointer-events:none;
+      transform: rotate(8deg);
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-6px) scale(1.01)}
+      100%{transform:translateY(0) scale(1)}
+    }
+
+    /* small flair for the caption that appears after clicking */
+    .result{
+      display:inline-block;
+      margin-top:1rem;
+      padding:0.5rem 0.85rem;
+      border-radius:999px;
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.04);
+      color:#ffedf3;
+      font-weight:700;
+      letter-spacing:0.02em;
+      transition: transform .22s cubic-bezier(.2,.9,.3,1), opacity .22s ease;
+      transform-origin:center;
+      opacity:0;
+    }
+    .result.show{opacity:1; transform:scale(1)}
+
+    /* small responsive tweak */
+    @media (max-width:460px){
+      .card{padding:2rem}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <div class="glow" aria-hidden="true"></div>
+
+    <h1 id="pregunta">Ya se vieron los capítulos de la nueva temporada de <em>Stranger Things</em>?</h1>
+    <img src="gatolike.jpg" alt="Stranger Things" class="img-top">
+    <div id="resultado" class="result" aria-live="polite"></div>
+  </div>
+
+  <script>
+    const resultado = document.getElementById('resultado');
+    const yes = document.getElementById('yesBtn');
+    const no = document.getElementById('noBtn');
+    const pregunta = document.getElementById('pregunta');
+
+    function showResult(text){
+      resultado.textContent = text;
+      resultado.classList.add('show');
+      setTimeout(()=> resultado.classList.remove('show'), 3000);
+    }
+
+    yes.addEventListener('click', ()=>{
+      showResult('¡Genial! Mantén los spoilers en secreto. 🤫');
+      pregunta.style.transform = 'scale(0.99) rotate(-0.6deg)';
+      setTimeout(()=> pregunta.style.transform = '', 420);
+    });
+
+    no.addEventListener('click', ()=>{
+      showResult('Perfecto — disfruta la temporada cuando la veas. 🍿');
+      pregunta.style.transform = 'scale(1.01) rotate(0.6deg)';
+      setTimeout(()=> pregunta.style.transform = '', 420);
+    });
+
+    // Keyboard shortcut: Y / N
+    window.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase() === 'y') yes.click();
+      if(e.key.toLowerCase() === 'n') no.click();
+    });
+  </script>
+</body>
+</html>
