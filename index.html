@@ -2,150 +2,121 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Stranger Things</title>
 
   <style>
     :root{
       --bg1:#0f172a;
       --accent:#ff3d81;
-      --glass: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.08);
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
 
     body{
       font-family: Inter, system-ui, sans-serif;
-      display:grid;
-      place-items:center;
-      background: radial-gradient(1200px 600px at 10% 20%, rgba(107,33,168,0.18), transparent),
-                  radial-gradient(1000px 500px at 90% 80%, rgba(255,61,129,0.12), transparent),
-                  linear-gradient(180deg,var(--bg1), #05060a 85%);
-      color:#fff;
-      padding:1.5rem;
+      background: linear-gradient(#0f172a, #0a0b12);
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:1rem;
       text-align:center;
     }
 
     .card{
-      width:min(900px, 95%);
-      padding:2.5rem 1.8rem;
-      border-radius:18px;
-      background: rgba(255,255,255,0.03);
-      box-shadow:0 10px 30px rgba(0,0,0,0.4);
-      backdrop-filter:blur(8px);
-      position:relative;
-    }
-
-    .img-top{
-      width:220px;
-      max-width:75%;
-      margin:1.2rem auto 1.5rem;
-      display:block;
-      border-radius:12px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.4);
-      animation:fadeIn 1.2s ease forwards;
-      opacity:0;
-    }
-
-    @keyframes fadeIn{
-      from{opacity:0; transform:translateY(-10px);}
-      to{opacity:1; transform:translateY(0);}
+      width:100%;
+      max-width:450px;
+      background:rgba(255,255,255,0.05);
+      padding:1.5rem;
+      border-radius:16px;
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 25px rgba(0,0,0,0.5);
     }
 
     h1{
-      font-size:clamp(1.6rem, 4vw, 3rem);
-      animation:float 6s ease-in-out infinite;
+      font-size:1.4rem;
+      line-height:1.3;
       margin-bottom:1rem;
     }
 
-    @keyframes float{
-      0%{transform:translateY(0)}
-      50%{transform:translateY(-6px)}
-      100%{transform:translateY(0)}
+    .img-top{
+      width:100%;
+      max-width:220px;
+      border-radius:12px;
+      margin:0 auto 1.2rem;
+      display:block;
+      box-shadow:0 5px 16px rgba(0,0,0,0.4);
     }
 
     .buttons{
-      margin-top:1rem;
+      margin-bottom:1rem;
     }
 
     .btn{
-      padding:0.7rem 1.3rem;
-      margin:0.3rem;
+      display:inline-block;
+      width:100%;
+      margin:0.4rem 0;
+      padding:0.75rem;
       font-size:1rem;
       font-weight:600;
-      cursor:pointer;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.15);
-      background: linear-gradient(90deg, rgba(255,61,129,0.18), rgba(107,33,168,0.1));
+      border-radius:10px;
+      border:none;
       color:white;
+      background:rgba(255,255,255,0.12);
+      backdrop-filter:blur(4px);
+      cursor:pointer;
       transition:0.2s;
     }
 
-    .btn:hover{
-      transform:scale(1.05);
+    .btn:active{
+      transform:scale(0.97);
     }
 
     .result{
-      margin-top:1.2rem;
-      font-size:1.1rem;
-      padding:0.5rem 1rem;
-      border-radius:999px;
-      background:var(--glass);
       opacity:0;
       transition:opacity 0.3s ease;
+      background:var(--glass);
+      padding:0.6rem 1rem;
+      border-radius:999px;
+      display:inline-block;
+      font-size:0.95rem;
     }
-    .result.show{opacity:1;}
 
-    @media (max-width:480px){
-      .card{padding:1.8rem}
-      .btn{font-size:0.9rem}
-      h1{font-size:1.45rem}
+    .result.show{
+      opacity:1;
     }
+
   </style>
 </head>
-
 <body>
+
   <div class="card">
-    
+
     <h1 id="pregunta">
       ¿Ya se vieron los capítulos de la nueva temporada de <em>Stranger Things</em>?
     </h1>
 
-    <img src="gatolike.jpg" alt="Imagen" class="img-top">
+    <img src="gatolike.jpg" class="img-top" alt="Imagen">
 
-    <div class="buttons">
-      <button id="yesBtn" class="btn">Sí, ya vi</button>
-      <button id="noBtn" class="btn">No, aún no</button>
-    </div>
-
-    <div id="resultado" class="result"></div>
   </div>
 
   <script>
-    const resultado = document.getElementById('resultado');
-    const pregunta = document.getElementById('pregunta');
-    const yes = document.getElementById('yesBtn');
-    const no = document.getElementById('noBtn');
+    const yes = document.getElementById("yesBtn");
+    const no = document.getElementById("noBtn");
+    const resultado = document.getElementById("resultado");
 
-    function showResult(text){
-      resultado.textContent = text;
-      resultado.classList.add('show');
-      setTimeout(()=> resultado.classList.remove('show'), 2900);
+    function showResult(msg){
+      resultado.textContent = msg;
+      resultado.classList.add("show");
+      setTimeout(() => resultado.classList.remove("show"), 2500);
     }
 
-    yes.addEventListener('click', ()=>{
-      showResult("¡Genial! Mantén los spoilers en secreto. 🤫");
-    });
-
-    no.addEventListener('click', ()=>{
-      showResult("Perfecto — disfrútala cuando la veas. 🍿");
-    });
-
-    // Atajos de teclado Y/N
-    window.addEventListener('keydown', (e)=>{
-      if(e.key.toLowerCase() === 'y') yes.click();
-      if(e.key.toLowerCase() === 'n') no.click();
-    });
+    yes.onclick = () => showResult("¡Genial! Mantén los spoilers en secreto. 🤫");
+    no.onclick = () => showResult("Perfecto — disfrútala cuando la veas. 🍿");
   </script>
+
 </body>
 </html>
